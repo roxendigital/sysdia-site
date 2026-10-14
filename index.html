@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sysdia: Blood pressure, kept simple</title>
+<meta name="description" content="Sysdia is a simple blood pressure log. Log a reading in seconds, get gentle reminders, see your trend and share a clean PDF report with your doctor. Everything stays on your phone.">
+<meta property="og:title" content="Sysdia: Blood pressure, kept simple">
+<meta property="og:description" content="Log a reading in seconds, see your trend and share a clean report with your doctor. Everything stays on your phone.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2F5BEA">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 600; font-display: swap; src: url("fonts/PlusJakartaSans-600.ttf") format("truetype"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 700; font-display: swap; src: url("fonts/PlusJakartaSans-700.ttf") format("truetype"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 800; font-display: swap; src: url("fonts/PlusJakartaSans-800.ttf") format("truetype"); }
+  @font-face { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/InstrumentSerif-Italic.ttf") format("truetype"); }
+
+  :root {
+    --bg: #FFFFFF; --surface: #F4F5F7; --ink: #14161A; --muted: #5B6270; --line: #D5D9E0;
+    --accent: #2F5BEA; --on-accent: #FFFFFF; --tint: #DCE5FF; --on-tint: #1F2A44;
+    --link: #2F5BEA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0E1117; --surface: #1A1D24; --ink: #F3F4F6; --muted: #A9B0BC; --line: #3A3F4B;
+      --accent: #5B7CF0; --on-accent: #14161A; --tint: #1C2648; --on-tint: #DCE5FF;
+      --link: #8FA9FF;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; -webkit-font-smoothing: antialiased; }
+  a { color: var(--link); }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .serif { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: 0; }
+  :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 6px; }
+
+  /* Hero */
+  .hero { background: var(--accent); color: var(--on-accent); position: relative; overflow: hidden; border-radius: 0 0 48px 48px; }
+  .hero .bg-line { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .nav { display: flex; align-items: center; gap: 10px; padding: 22px 0; position: relative; }
+  .logo { width: 34px; height: 34px; border-radius: 11px; background: var(--bg); display: grid; place-items: center; }
+  .brand { font-weight: 800; font-size: 19px; }
+  .nav .grow { flex: 1; }
+  .nav a { color: var(--on-accent); font-weight: 700; text-decoration: none; padding: 10px 4px; }
+  .nav a:hover { text-decoration: underline; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: end; position: relative; }
+  .hero-copy { padding: 48px 0 72px; align-self: center; }
+  h1 { margin: 0; font-weight: 800; font-size: clamp(2.6rem, 6.4vw, 4.6rem); line-height: 1.02; letter-spacing: -0.035em; }
+  h1 .serif { font-size: 1.12em; }
+  .lede { font-size: 1.15rem; line-height: 1.6; max-width: 32rem; margin: 22px 0 0; opacity: .95; }
+  .cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; min-height: 56px; padding: 0 28px; border-radius: 999px; background: var(--bg); color: var(--accent); font-weight: 800; font-size: 1.05rem; }
+  .cta-note { display: block; margin-top: 10px; font-size: .9rem; opacity: .9; }
+  .phones { position: relative; height: 520px; }
+  .phone { position: absolute; bottom: 0; width: 250px; border: 2px solid rgba(255,255,255,.45); border-bottom: 0; border-radius: 44px 44px 0 0; overflow: hidden; background: var(--surface); }
+  .phone img { width: 100%; height: auto; margin-top: -26px; }
+  .phone.a { left: 0; height: 430px; }
+  .phone.b { left: 150px; height: 500px; left: auto; right: 0; }
+
+  /* Sections */
+  section { padding: 88px 0; }
+  .eyebrow { color: var(--link); font-weight: 800; font-size: .8rem; letter-spacing: .09em; text-transform: uppercase; margin: 0 0 10px; }
+  h2 { margin: 0; font-weight: 800; font-size: clamp(2rem, 4.6vw, 3rem); line-height: 1.08; letter-spacing: -0.03em; }
+  h2 .serif { font-size: 1.12em; color: var(--link); }
+  .sub { color: var(--muted); max-width: 36rem; margin: 14px 0 0; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+  .feature { background: var(--surface); border-radius: 32px; padding: 28px 28px 0; display: flex; flex-direction: column; overflow: hidden; min-height: 560px; }
+  .feature.tint { background: var(--tint); color: var(--on-tint); }
+  .feature h3 { margin: 0; font-weight: 800; font-size: 1.45rem; line-height: 1.15; letter-spacing: -0.02em; }
+  .feature p { margin: 10px 0 24px; color: var(--muted); font-size: 1rem; line-height: 1.55; }
+  .feature.tint p { color: var(--on-tint); opacity: .85; }
+  .shot { margin-top: auto; width: 82%; align-self: center; border: 2px solid var(--line); border-bottom: 0; border-radius: 34px 34px 0 0; overflow: hidden; background: var(--bg); }
+  .shot img { width: 100%; height: auto; max-height: 330px; object-fit: cover; object-position: top; }
+
+  /* Privacy band */
+  .band { background: var(--tint); color: var(--on-tint); border-radius: 48px; padding: 64px 48px; display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; }
+  .band .lock { width: 84px; height: 84px; border-radius: 26px; background: var(--bg); display: grid; place-items: center; }
+  .band h2 .serif { color: var(--accent); }
+  .band p { margin: 14px 0 0; max-width: 40rem; opacity: .9; }
+  .band a { color: var(--on-tint); font-weight: 800; }
+
+  footer { padding: 24px 0 64px; color: var(--muted); font-size: .92rem; }
+  footer .links { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px; }
+  footer p { margin: 0; max-width: 46rem; }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-copy { padding: 24px 0 8px; }
+    .phones { height: 420px; max-width: 460px; width: 100%; margin: 0 auto; }
+    .phone { width: 210px; }
+    .phone.a { height: 340px; }
+    .phone.b { height: 410px; }
+    .features { grid-template-columns: 1fr; }
+    .feature { min-height: 0; }
+    .shot { width: min(300px, 80%); }
+    .shot img { max-height: 360px; }
+    section { padding: 64px 0; }
+    .band { grid-template-columns: 1fr; padding: 40px 28px; border-radius: 36px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="bg-line" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-60 470 H330 L420 330 L520 590 L650 210 L760 470 H1280" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <div class="logo" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 512 512"><path d="M72 276 H168 L208 220 L256 352 L312 164 L352 276 H440" fill="none" stroke="#2F5BEA" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="brand">Sysdia</span>
+      <span class="grow"></span>
+      <a href="#features">Features</a>
+      <a href="https://roxendigital.github.io/sysdia-privacy/">Privacy</a>
+    </nav>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>Blood pressure, kept <span class="serif">simple</span></h1>
+        <p class="lede">Log your blood pressure in seconds, get gentle reminders, and show your doctor a clean record. Everything stays on your phone.</p>
+        <!-- When the app is live on Google Play, change this span into a link: <a class="cta" href="PLAY STORE URL">Get it on Google Play</a> -->
+        <span class="cta" aria-disabled="true">Coming soon to Google Play</span>
+      </div>
+      <div class="phones">
+        <div class="phone a"><img src="img/today.png" width="540" height="1158" alt="Sysdia Today screen showing the latest reading, the weekly chart and the 7-day average"></div>
+        <div class="phone b"><img src="img/trend.png" width="540" height="1158" alt="Sysdia History screen with a daily average chart"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="features">
+    <div class="wrap">
+      <p class="eyebrow">What it does</p>
+      <h2>Six things, <span class="serif">done well.</span></h2>
+      <p class="sub">Sysdia is a record-keeping tool for people who measure their blood pressure at home.</p>
+
+      <div class="features">
+        <article class="feature">
+          <h3>Log in seconds</h3>
+          <p>Big keys make entering your numbers quick. Pulse and a note are optional.</p>
+          <div class="shot"><img src="img/add.png" width="540" height="1158" loading="lazy" alt="Add reading screen with a number keypad"></div>
+        </article>
+        <article class="feature tint">
+          <h3>Today, at a glance</h3>
+          <p>Your latest reading, the week's chart and your streak, all on one screen.</p>
+          <div class="shot"><img src="img/today.png" width="540" height="1158" loading="lazy" alt="Today screen with the latest reading and weekly chart"></div>
+        </article>
+        <article class="feature">
+          <h3>Every reading, labelled</h3>
+          <p>Each reading shows its category, using the American Heart Association ranges. A label describes one reading and is not a diagnosis.</p>
+          <div class="shot"><img src="img/readings.png" width="540" height="1158" loading="lazy" alt="List of readings, each with its category label"></div>
+        </article>
+        <article class="feature tint">
+          <h3>Watch your trend</h3>
+          <p>Switch between week, month and longer views to see how your daily averages move.</p>
+          <div class="shot"><img src="img/trend.png" width="540" height="1158" loading="lazy" alt="History screen with a daily average chart"></div>
+        </article>
+        <article class="feature">
+          <h3>Gentle reminders</h3>
+          <p>Checking at the same times each day gives your doctor the clearest picture. Lock screen alerts never show your numbers.</p>
+          <div class="shot"><img src="img/reminders.png" width="540" height="1158" loading="lazy" alt="Reminders screen with two daily reminders"></div>
+        </article>
+        <article class="feature tint">
+          <h3>Take it to your doctor</h3>
+          <p>Share a clean PDF report with your averages, chart and every reading.</p>
+          <div class="shot"><img src="img/report.png" width="540" height="1158" loading="lazy" alt="Report screen with date range options and a preview"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top: 0">
+    <div class="wrap">
+      <div class="band">
+        <div class="lock" aria-hidden="true">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#2F5BEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        </div>
+        <div>
+          <h2>Everything stays on your <span class="serif">phone.</span></h2>
+          <p>No account, no ads and no analytics. Your readings are stored on your phone, and they only leave it when you choose to share a report or a backup file. <a href="https://roxendigital.github.io/sysdia-privacy/">Read the privacy policy</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Sysdia is a record-keeping tool. It does not give medical advice. Talk to your health care provider about your readings. If you feel unwell or are worried about a reading, get medical help.</p>
+    <div class="links">
+      <a href="https://roxendigital.github.io/sysdia-privacy/">Privacy policy</a>
+      <a href="mailto:roxendigitalinc@gmail.com">Contact: roxendigitalinc@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
