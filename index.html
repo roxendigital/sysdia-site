@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sysdia: Blood pressure, kept simple</title>
-<meta name="description" content="Sysdia is a simple blood pressure log. Log a reading in seconds, get gentle reminders, see your trend and share a clean PDF report with your doctor. Everything stays on your phone.">
+<meta name="description" content="Sysdia is a simple blood pressure log. Log a reading in seconds, get gentle reminders, see your trend and share a clean PDF report with your doctor. Your readings stay on your phone. Free, with a small one-time upgrade.">
 <meta property="og:title" content="Sysdia: Blood pressure, kept simple">
-<meta property="og:description" content="Log a reading in seconds, see your trend and share a clean report with your doctor. Everything stays on your phone.">
+<meta property="og:description" content="Log a reading in seconds, see your trend and share a clean report with your doctor. Your readings stay on your phone.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#2F5BEA">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -44,7 +44,7 @@
   .logo { width: 34px; height: 34px; border-radius: 11px; background: var(--bg); display: grid; place-items: center; }
   .brand { font-weight: 800; font-size: 19px; }
   .nav .grow { flex: 1; }
-  .nav a { color: var(--on-accent); font-weight: 700; text-decoration: none; padding: 10px 4px; }
+  .nav a { color: var(--on-accent); font-weight: 700; font-size: .95rem; white-space: nowrap; text-decoration: none; padding: 10px 4px; }
   .nav a:hover { text-decoration: underline; }
   .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: end; position: relative; }
   .hero-copy { padding: 48px 0 72px; align-self: center; }
@@ -53,6 +53,11 @@
   .lede { font-size: 1.15rem; line-height: 1.6; max-width: 32rem; margin: 22px 0 0; opacity: .95; }
   .cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; min-height: 56px; padding: 0 28px; border-radius: 999px; background: var(--bg); color: var(--accent); font-weight: 800; font-size: 1.05rem; }
   .cta-note { display: block; margin-top: 10px; font-size: .9rem; opacity: .9; }
+  .stores { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .store { display: inline-flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); color: var(--accent); font-weight: 800; font-size: 1.02rem; line-height: 1.2; text-decoration: none; }
+  .store { text-align: left; }
+  .store small { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; opacity: .75; }
+  a.store:hover { filter: brightness(.96); }
   .phones { position: relative; height: 520px; }
   .phone { position: absolute; bottom: 0; width: 250px; border: 2px solid rgba(255,255,255,.45); border-bottom: 0; border-radius: 44px 44px 0 0; overflow: hidden; background: var(--surface); }
   .phone img { width: 100%; height: auto; margin-top: -26px; }
@@ -82,6 +87,29 @@
   .band p { margin: 14px 0 0; max-width: 40rem; opacity: .9; }
   .band a { color: var(--on-tint); font-weight: 800; }
 
+  /* Free and Pro */
+  .deal { background: var(--accent); color: var(--on-accent); border-radius: 32px; padding: 32px 36px; margin-top: 40px; display: grid; gap: 6px; }
+  .deal .big { font-weight: 800; font-size: clamp(1.9rem, 4.4vw, 2.7rem); line-height: 1.12; letter-spacing: -0.03em; margin: 0; }
+  .deal .big .serif { font-size: 1.12em; }
+  .deal p { margin: 0; font-size: 1.08rem; opacity: .95; }
+  .plans { margin-top: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 32px; overflow: hidden; }
+  .plans table { width: 100%; border-collapse: collapse; }
+  .plans th, .plans td { text-align: left; padding: 18px 24px; vertical-align: top; }
+  .plans thead th { font-weight: 800; font-size: 1.05rem; padding-top: 22px; padding-bottom: 22px; vertical-align: middle; }
+  .plans thead th.pro { background: var(--accent); color: var(--on-accent); }
+  .plans tbody th { font-weight: 800; width: 34%; }
+  .plans tbody tr + tr > * { border-top: 1px solid var(--line); }
+  .plans td { color: var(--muted); }
+  .plans td.pro { background: var(--tint); color: var(--on-tint); font-weight: 700; }
+  .plans .ck { color: var(--accent); vertical-align: middle; }
+  .plans td.pro .ck { color: var(--accent); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .fine { color: var(--muted); font-size: .95rem; margin: 18px 4px 0; }
+  .get { background: var(--surface); border-radius: 48px; padding: 56px 48px; text-align: center; }
+  .get p { color: var(--muted); max-width: 32rem; margin: 14px auto 0; }
+  .get .stores { justify-content: center; }
+  .get .store { background: var(--accent); color: var(--on-accent); }
+
   footer { padding: 24px 0 64px; color: var(--muted); font-size: .92rem; }
   footer .links { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px; }
   footer p { margin: 0; max-width: 46rem; }
@@ -99,6 +127,34 @@
     .shot img { max-height: 360px; }
     section { padding: 64px 0; }
     .band { grid-template-columns: 1fr; padding: 40px 28px; border-radius: 36px; }
+    .deal { padding: 26px 24px; border-radius: 28px; }
+    .plans { border-radius: 24px; }
+    .plans th, .plans td { padding: 14px 14px; font-size: .95rem; }
+    .plans tbody th { width: 30%; }
+    .get { padding: 40px 24px; border-radius: 36px; }
+  }
+  /* Phones: each row becomes a small card, so nothing is squeezed into narrow columns */
+  @media (max-width: 600px) {
+    .plans thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .plans table, .plans tbody, .plans tr, .plans th, .plans td { display: block; width: auto; }
+    .plans tbody tr { padding: 16px 16px 18px; }
+    .plans tbody tr + tr { border-top: 1px solid var(--line); }
+    .plans tbody tr + tr > * { border-top: 0; }
+    .plans tbody th { padding: 0 0 10px; width: auto; }
+    .plans td { display: flex; gap: 12px; align-items: baseline; padding: 10px 14px; border-radius: 14px; }
+    .plans td::before { content: attr(data-label); min-width: 3rem; font-weight: 800; color: var(--muted); }
+    .plans td.pro { margin-top: 6px; }
+    .plans td.pro::before { color: var(--accent); }
+    .plans .ck { flex: none; }
+    .stores { flex-direction: column; }
+    .store { width: 100%; justify-content: flex-start; padding: 0 18px 0 18px; gap: 12px; font-size: .96rem; }
+    .get { padding: 40px 20px; }
+  }
+  /* Very small phones: keep the nav on one row */
+  @media (max-width: 480px) {
+    .nav { gap: 8px; }
+    .nav a { font-size: .9rem; }
+    .nav a[href="#features"] { display: none; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
@@ -117,14 +173,24 @@
       <span class="brand">Sysdia</span>
       <span class="grow"></span>
       <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
       <a href="https://roxendigital.github.io/sysdia-privacy/">Privacy</a>
     </nav>
     <div class="hero-grid">
       <div class="hero-copy">
         <h1>Blood pressure, kept <span class="serif">simple</span></h1>
-        <p class="lede">Log your blood pressure in seconds, get gentle reminders, and show your doctor a clean record. Everything stays on your phone.</p>
-        <!-- When the app is live on Google Play, change this span into a link: <a class="cta" href="PLAY STORE URL">Get it on Google Play</a> -->
-        <span class="cta" aria-disabled="true">Coming soon to Google Play</span>
+        <p class="lede">Log your blood pressure in seconds, get gentle reminders, and show your doctor a clean record. Your readings stay on your phone.</p>
+        <!-- When each store listing is live, change its <span class="store"> into <a class="store" href="STORE URL"> and remove the "Coming soon" line. -->
+        <div class="stores">
+          <span class="store" aria-disabled="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+            <span><small>Coming soon</small>Get it on Google Play</span>
+          </span>
+          <span class="store" aria-disabled="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+            <span><small>Coming soon</small>Download on the App Store</span>
+          </span>
+        </div>
       </div>
       <div class="phones">
         <div class="phone a"><img src="img/today.png" width="540" height="1158" alt="Sysdia Today screen showing the latest reading, the weekly chart and the 7-day average"></div>
@@ -176,6 +242,35 @@
     </div>
   </section>
 
+  <section id="pricing" style="padding-top: 0">
+    <div class="wrap">
+      <p class="eyebrow">Free and Pro</p>
+      <h2>Free to use. Upgrade <span class="serif">once.</span></h2>
+      <p class="sub">Logging, reminders and backup are free, always. Pro adds more history, more reminders and longer reports.</p>
+
+      <div class="deal">
+        <p class="big">Pay once, <span class="serif">keep it.</span></p>
+        <p>About the price of a coffee, one time. No monthly fees and no subscription. The price shows in your own currency in the app store.</p>
+      </div>
+
+      <div class="plans">
+        <table>
+          <caption class="sr-only">What is free and what Pro adds</caption>
+          <thead><tr><th scope="col">What you get</th><th scope="col">Free</th><th scope="col" class="pro">Pro</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Unlimited readings</th><td data-label="Free"><svg class="ck" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="sr-only">Included</span></td><td class="pro" data-label="Pro"><svg class="ck" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Backup and restore</th><td data-label="Free"><svg class="ck" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="sr-only">Included</span></td><td class="pro" data-label="Pro"><svg class="ck" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Reference range labels</th><td data-label="Free"><svg class="ck" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="sr-only">Included</span></td><td class="pro" data-label="Pro"><svg class="ck" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">History</th><td data-label="Free">Week and month</td><td class="pro" data-label="Pro">Week, month, 3 months, year and all time</td></tr>
+            <tr><th scope="row">Reminders</th><td data-label="Free">2 reminders, each on 1 day</td><td class="pro" data-label="Pro">Unlimited, on any days</td></tr>
+            <tr><th scope="row">Download report (PDF)</th><td data-label="Free">Last 7 days</td><td class="pro" data-label="Pro">Any dates</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fine">Reference ranges follow the American Heart Association. Sysdia is a record-keeping tool and does not give medical advice.</p>
+    </div>
+  </section>
+
   <section style="padding-top: 0">
     <div class="wrap">
       <div class="band">
@@ -183,8 +278,26 @@
           <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#2F5BEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
         </div>
         <div>
-          <h2>Everything stays on your <span class="serif">phone.</span></h2>
-          <p>No account, no ads and no analytics. Your readings are stored on your phone, and they only leave it when you choose to share a report or a backup file. <a href="https://roxendigital.github.io/sysdia-privacy/">Read the privacy policy</a>.</p>
+          <h2>Your readings stay on your <span class="serif">phone.</span></h2>
+          <p>No account and no ads. Your readings are stored on your phone, and they only leave it when you choose to share a report or a backup file. If you buy Pro, the app store and a purchase service called RevenueCat handle the payment, and they never receive your readings. <a href="https://roxendigital.github.io/sysdia-privacy/">Read the privacy policy</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top: 0">
+    <div class="wrap">
+      <div class="get">
+        <h2>Get Sysdia, <span class="serif">free.</span></h2>
+        <p>Start logging in seconds. Upgrade later, only if you want to.</p>
+        <div class="stores">
+          <span class="store" aria-disabled="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+            <span><small>Coming soon</small>Get it on Google Play</span>
+          </span>
+          <span class="store" aria-disabled="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+            <span><small>Coming soon</small>Download on the App Store</span>
+          </span>
         </div>
       </div>
     </div>
